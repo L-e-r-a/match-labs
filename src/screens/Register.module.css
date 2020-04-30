@@ -40,3 +40,8 @@
   background: red;
   padding: 100rem;
 }
+
+.title {
+  text-align: center;
+  margin: 2rem;
+}
