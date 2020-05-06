@@ -213,3 +213,21 @@ export const me = async (data) => {
 
   return json.error ? false : formatMe(json);
 };
+
+
+export const editCandidate = async (id, role, data) => {
+  const reqBody = {};
+  reqBody[role] = data;
+
+  const res = await fetch(
+    `https://match-labs-api.herokuapp.com/api/candidates/${id}`,
+    {
+      method: "PUT",
+      headers: { ...config.authorization, ...config.headers },
+      body: JSON.stringify(reqBody),
+    }).catch((e) => console.log(e));
+
+
+  const json = await res.json();
+  return json;
+};

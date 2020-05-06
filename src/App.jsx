@@ -17,39 +17,48 @@ const App = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const onMount = async () => {
-      const user = await me();
-      setUser(user);
-      localStorage.setItem("role", user.role);
-    };
-    onMount();
+    getUserData();
   }, []);
+
+  const getUserData = async () => {
+    const user = await me();
+    setUser(user);
+    localStorage.setItem("role", user.role);
+  }
+
+  const deleteUserSession = () => {
+    setUser(false);
+  }
 
   if (user === null) return <Loader />;
 
   return (
-    <AppContext.Provider value={{ user }}>
+    <AppContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
         <Toggle />
         <Switch>
           <Route path="/profile/:id" component={Profile}></Route>
           <Route path="/library" component={Library}></Route>
-          <Route path="/account" component={Account}></Route>
+          <Route path="/account"
+            render={(routeProps) => (<Account {...routeProps} updateUser={getUserData} />)}>
+          </Route>
           <Route path="/register" component={Register}></Route>
           <Route path="/login" component={Login}></Route>
-          <Route path="/logout" component={Logout}></Route>
+          <Route path="/logout"
+            render={(routeProps) => (<Logout {...routeProps} deleteUserSession={deleteUserSession} />)}>
+          </Route>
           <Route
             path="/"
             render={() =>
               user ? (
                 <Likes />
               ) : (
-                <Redirect
-                  to={{
-                    pathname: "/login",
-                  }}
-                />
-              )
+                  <Redirect
+                    to={{
+                      pathname: "/login",
+                    }}
+                  />
+                )
             }
           ></Route>
         </Switch>

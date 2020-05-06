@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { logout } from "../utils/request";
 
-const Logout = () => {
+const Logout = ({ deleteUserSession }) => {
+  
   useEffect(() => {
     const onMount = async () => {
       localStorage.setItem("role", "");
       localStorage.setItem("token", "");
+      deleteUserSession();
       await logout();
     };
     onMount();
