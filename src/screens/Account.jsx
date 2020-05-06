@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 import styles from "./Account.module.css";
 
 import CandidateForm from "../components/CandidateForm";
-import {EDIT_CANDIDATE_FIELDS} from "../mocks";
+import PageTitle from "../components/PageTitle";
+import { EDIT_CANDIDATE_FIELDS } from "../mocks";
 
 
 const Account = () => {
@@ -12,13 +13,18 @@ const Account = () => {
     }
 
     return (
-        <div className={styles.accountForm}>
-            <h3 className={styles.title}>Edit Account</h3>
-            <CandidateForm 
-                inputsData = {EDIT_CANDIDATE_FIELDS} 
-                sendFormData = {logFormData}
-            />
-        </div>
+        <>
+            <PageTitle>
+                <h3>Edit account</h3>
+            </PageTitle>
+            
+            <div className={styles.accountForm}>
+                <CandidateForm
+                    inputsData={EDIT_CANDIDATE_FIELDS}
+                    sendFormData={logFormData}
+                />
+            </div>
+        </>
     )
 }
 
